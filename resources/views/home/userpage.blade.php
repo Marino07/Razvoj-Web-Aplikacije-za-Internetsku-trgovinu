@@ -17,7 +17,7 @@
     <!-- font awesome style -->
     <link href="home/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- Custom styles for this template -->
-    <link href="home/css/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('home/css/style.css') }}">
     <!-- responsive style -->
     <link href="home/css/responsive.css" rel="stylesheet"/>
 </head>

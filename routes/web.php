@@ -15,5 +15,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-
-Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth');
+Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth')->name('redirect');
