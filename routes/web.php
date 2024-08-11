@@ -19,7 +19,13 @@ Route::middleware([
 Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth')->name('redirect');
 Route::get('/view_category', [AdminController::class, 'view_category']);
 Route::post('/resolve_category', [AdminController::class, 'resolve_category'])->name('resolve_category');
-Route::delete('/category/{category}', [AdminController::class, 'destroy'])->name('category.destroy');
+Route::get('/category/{category}', [AdminController::class, 'destroy'])->name('category.destroy');
+Route::get('/view_product', [AdminController::class, 'view_product'])->name('view_product');
+
+Route::post('/add_product', [AdminController::class, 'add_product'])->name('add_product');
+
+
+
 
 
 

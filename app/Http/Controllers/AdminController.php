@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManager;
 
 class AdminController extends Controller
 {
@@ -28,6 +30,42 @@ class AdminController extends Controller
         }
 
         return redirect()->back()->with('error', 'Category not found.');
+    }
+    public function view_product(){
+        $categories = Category::orderBy('created_at', 'desc')->get();
+        return view('admin.product',compact('categories'));
+    }
+    public function add_product(Request $request){
+
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'product_price' => 'required|numeric',
+            'discount_price' => 'nullable|numeric',
+            'quantity' => 'required|integer',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $imagePath = $request->file('image')->store('products', 'public'); // driver is storage /products/img
+        $image = ImageManager::imagick()->read("storage/{$imagePath}"); //already in public so
+        $image->resize(1200, 800);
+        $image->save();
+
+        // Kreiranje proizvoda u bazi
+        Product::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'price' => $validatedData['product_price'],
+            'discount_price' => $validatedData['discount_price'],
+            'quantity' => $validatedData['quantity'],
+            'category_id' => $validatedData['category_id'],
+            'image' => $imagePath,
+        ]);
+
+        // Povratak nazad sa porukom
+        return redirect()->back()->with('message', 'Product added successfully.');
+
+
     }
 
 
