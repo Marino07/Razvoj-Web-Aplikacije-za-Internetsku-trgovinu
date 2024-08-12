@@ -17,12 +17,22 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth')->name('redirect');
-Route::get('/view_category', [AdminController::class, 'view_category']);
-Route::post('/resolve_category', [AdminController::class, 'resolve_category'])->name('resolve_category');
-Route::get('/category/{category}', [AdminController::class, 'destroy'])->name('category.destroy');
-Route::get('/view_product', [AdminController::class, 'view_product'])->name('view_product');
 
-Route::post('/add_product', [AdminController::class, 'add_product'])->name('add_product');
+Route::middleware('admin')->group(function () {
+
+    Route::post('/resolve_category', [AdminController::class, 'resolve_category']);
+    Route::get('/view_category', [AdminController::class, 'view_category']);
+    Route::delete('/category/{category}', [AdminController::class, 'destroy'])->name('category.destroy');
+    Route::get('/view_product', [AdminController::class, 'view_product'])->name('view_product');
+    Route::post('/add_product', [AdminController::class, 'add_product'])->name('add_product');
+    Route::get('/show_product', [AdminController::class, 'show_product'])->name('show_product');
+    Route::delete('/product/{product}', [AdminController::class, 'destroy_product'])->name('product.destroy');
+
+});
+
+
+
+
 
 
 

@@ -115,7 +115,7 @@
                     <select class="form-control @error('category_id') is-invalid @enderror" id="category" name="category_id">
                         <option value="">Choose Category</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}> <!-- value is what is sending -->
                                 {{ $category->category_name }}
                             </option>
                         @endforeach
@@ -138,7 +138,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-secondary rounded-pill">Add Category</button>
+                <button type="submit" class="btn btn-secondary rounded-pill">Add Product</button>
             </form>
         </div>
 

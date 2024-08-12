@@ -15,7 +15,6 @@ class AdminController extends Controller
     }
     public function resolve_category(Request $request){
         $request->validate(['category_name' => 'required|string|max:255']);
-
         $category = new Category();
         $category->category_name = $request->input('category_name');
         $category->save();
@@ -34,6 +33,17 @@ class AdminController extends Controller
     public function view_product(){
         $categories = Category::orderBy('created_at', 'desc')->get();
         return view('admin.product',compact('categories'));
+    }
+    public function show_product(){
+        $products = Product::all();
+        return view('admin.show_product',compact('products'));
+    }
+    public function destroy_product(Product $product){
+        if($product){
+            $product->delete();
+            return redirect()->back()->with('message', 'Product deleted successfully.');
+        }
+
     }
     public function add_product(Request $request){
 
@@ -64,7 +74,6 @@ class AdminController extends Controller
 
         // Povratak nazad sa porukom
         return redirect()->back()->with('message', 'Product added successfully.');
-
 
     }
 
