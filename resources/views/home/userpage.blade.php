@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+
+    </style>
     <!-- Basic -->
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -14,6 +17,9 @@
     <title>Famms - Fashion HTML Template</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css"/>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- font awesome style -->
     <link href="home/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- Custom styles for this template -->

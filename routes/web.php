@@ -31,8 +31,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/product/edit/{product}',[AdminController::class,'edit'])->name('product.edit');
     Route::put('/product/update/{product}',[AdminController::class,'update'])->name('product.update');
 
-
 });
+Route::get('/product_details/{product}',[HomeController::class,'product_details'])->name('product.details');
+
 
 
 
