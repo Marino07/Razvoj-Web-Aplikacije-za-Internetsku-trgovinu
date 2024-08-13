@@ -79,14 +79,22 @@
                         <td><img style="height: 50px; width: 50px;"  src="/storage/{{ $product->image }}"></td>
 
 
-                        <td>
+                       <td>
                             <form action="{{ route('product.destroy', $product->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button onclick="return confirm('Are you sure you want delete this')" type="submit"
                                         class="btn btn-danger btn-sm">Delete</button>
                             </form>
-                        </td>
+
+
+                            <form action="{{ route('product.edit',$product->id) }}" method="GET" style="display: inline-block">
+                                <button  type="submit"
+                                         class="btn btn-secondary btn-sm">Edit</button>
+                            </form>
+                       </td>
+
+
                     </tr>
                 @endforeach
                 <!-- End of Example rows -->
