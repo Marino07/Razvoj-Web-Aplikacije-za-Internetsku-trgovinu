@@ -92,7 +92,7 @@
 
             <p><strong>Category:</strong> {{ $product->category->category_name }}</p>
             <p><strong>Quantity Available:</strong> {{ $product->quantity }}</p>
-            <form action="" method="post">
+            <form action="/add_to_cart/{{ $product->id }}" method="post">
                 @csrf
                 <button type="submit" class="btn-custom">
                     <i class="fa fa-shopping-cart"></i>

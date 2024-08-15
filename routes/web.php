@@ -34,6 +34,9 @@ Route::middleware('admin')->group(function () {
 });
 Route::get('/product_details/{product}',[HomeController::class,'product_details'])->name('product.details');
 
+Route::post('/add_to_cart/{product}',[HomeController::class,'add_to_cart'])->name('product.cart');
+
+
 
 
 
