@@ -33,11 +33,14 @@ Route::middleware('admin')->group(function () {
 
 });
 Route::get('/product_details/{product}',[HomeController::class,'product_details'])->name('product.details');
+Route::get('/all_products',[HomeController::class,'all_products'])->name('all.products');
+
 
 Route::post('/add_to_cart/{product}',[HomeController::class,'add_to_cart'])->name('product.cart');
 Route::get('/show_cart',[HomeController::class,'show_cart'])->name('show.cart');
 
 Route::delete('/delete_from_cart/{cart}',[HomeController::class,'delete_cart'])->name('delete.cart');
+
 
 
 

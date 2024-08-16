@@ -32,6 +32,15 @@
         .table th, .table td {
             text-align: center;
         }
+        td.description {
+            word-wrap: break-word;
+            max-width: 200px; /* Postavi maksimalnu širinu ćelije */
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Dodaje tri točkice ako tekst prelazi maksimalnu širinu */
+        }
+
+
     </style>
     @include('admin.css')
 </head>
@@ -71,7 +80,7 @@
                 @foreach ($products as $product)
                     <tr>
                         <td>{{ $product->title }}</td>
-                        <td>{{ $product->description }}</td>
+                        <td class="description">{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->discount_price }}</td>

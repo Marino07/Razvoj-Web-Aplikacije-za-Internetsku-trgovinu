@@ -23,6 +23,10 @@ class HomeController extends Controller
         $products = Product::orderBy('created_at', 'desc')->paginate(6);
         return view('home.userpage', compact('products'));
     }
+    public function all_products(){
+        $products = Product::all();
+        return view('home.view_all_products',compact('products'));
+    }
 
     public function product_details(Product $product) {
         return view('home.product_details', compact('product'));

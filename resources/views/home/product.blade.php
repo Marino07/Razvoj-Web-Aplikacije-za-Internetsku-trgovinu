@@ -1,5 +1,4 @@
 
-
 <section class="product_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
@@ -57,7 +56,7 @@
         </div>
 
         <div class="btn-box mt-4">
-            <a href="#" class="btn btn-primary">
+            <a href="/all_products" class="btn btn-primary">
                 View All products
             </a>
         </div>
