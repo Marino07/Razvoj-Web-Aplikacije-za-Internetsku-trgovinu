@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,17 +39,14 @@ class HomeController extends Controller
         } else {
             $auth_user = Auth::user();
 
-            // Provjerava da li korisnik već ima proizvod u korpi
             $existing_cart_item = Cart::where('user_id', $auth_user->id)
                 ->where('product_id', $product->id)
                 ->first();
 
             if ($existing_cart_item) {
-                // Ako postoji, samo povećaj količinu
                 $existing_cart_item->quantity += 1;
                 $existing_cart_item->save();
             } else {
-                // Ako ne postoji, kreiraj novi zapis
                 Cart::create([
                     'product_id' => $product->id,
                     'user_id' => $auth_user->id,
@@ -77,6 +75,9 @@ class HomeController extends Controller
         else{
             abort(403,'Cart id  does not exist');
         }
+    }
+    public function checkout(User $user){
+        return view('home.checkout',compact('user'));
     }
 
 

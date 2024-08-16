@@ -8,11 +8,15 @@
             text-align: center !important;
 
         }
-        td{
+        td {
+            text-align: center;
+            vertical-align: middle !important;
             font-style: italic;
             color: #2f323a;
-            text-align: center;
+            padding: 10px;
         }
+
+
 
     </style>
 
@@ -77,19 +81,16 @@
                     <td>{{ $cart->quantity }}</td>
                     @if($cart->product->discount_price)
                         <td>${{ $cart->product->discount_price }}</td>
-                    @else
-                        <td>${{ $cart->product->price }}</td>
-                    @endif
-                    @if($cart->product->discount_price)
                         <td>${{ $cart->product->discount_price * $cart->quantity }}</td>
                     @else
+                        <td>${{ $cart->product->price }}</td>
                         <td>${{ $cart->product->price * $cart->quantity }}</td>
                     @endif
                     <td>
                         <form action="/delete_from_cart/{{ $cart->id }}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" onclick="return confirm('Are you sure you want delete')" class="btn btn-danger">Remove</button>
+                            <button type="submit" onclick="return confirm('Are you sure you want delete')" class="btn btn-danger rounded-pill">Remove</button>
                         </form>
                     </td>
                 </tr>
@@ -105,7 +106,24 @@
             </tbody>
         </table>
         <div class="total-price">
-            To Pay : <span>${{ $total_price }}</span>
+            <span>${{$total_price}}</span>
+            <a href="#" id="checkout-btn" class="btn-order">Checkout</a>
+        </div>
+
+    </div>
+    <!-- Modal for payment selection -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 style="font-style: italic">Payment method</h3>
+            <div class="method-buttons">
+                <button class="btn-payment" id="pay-card">Pay by Card</button>
+                <button class="btn-payment" id="pay-cash">Pay by Cash</button>
+            </div>
+            <form id="payment-form" style="display: none;" action="/checkout/{{$cart->user_id}}" method="POST">
+                <!-- Additional fields for card payment can go here if needed -->
+                <button type="submit" class="btn-order">Confirm Payment</button>
+            </form>
         </div>
     </div>
     </div>
@@ -119,6 +137,42 @@
 <div class="cpy_">
 
 </div>
+<script>
+    var modal = document.getElementById("paymentModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("checkout-btn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function(event) {
+        event.preventDefault(); // Prevent the default action of the anchor
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    document.getElementById('pay-card').addEventListener('click', function() {
+        document.getElementById('payment-form').style.display = 'block';
+        // Implement any additional logic for card payments
+    });
+
+    document.getElementById('pay-cash').addEventListener('click', function() {
+        document.getElementById('payment-form').style.display = 'block';
+    });
+</script>
 <!-- jQery -->
 <script src="home/js/jquery-3.4.1.min.js"></script>
 <!-- popper js -->
