@@ -60,7 +60,6 @@ class HomeController extends Controller
         } else {
 
             $auth_user = Auth::user();
-
             $carts = Cart::where('user_id', $auth_user->id)->get();
             return view('home.show_cart', compact('carts'));
         }

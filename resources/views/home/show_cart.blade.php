@@ -44,6 +44,18 @@
     <!-- header section strats -->
     @include('home.header')
     <div class="container mt-5">
+        @php
+            $total_price = 0;
+        @endphp
+            @if($carts->isEmpty())
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Your cart is empty.
+                <a href="{{ url('/') }}" class="alert-link">Browse products</a> to add items to your cart.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            @else
         <h2>Your Cart</h2>
         <table class="table table-bordered">
             <thead>
@@ -57,16 +69,22 @@
             </tr>
             </thead>
             <tbody>
-            @php
-                $total_price = 0;
-            @endphp
+
             @foreach($carts as $cart)
                 <tr>
                     <td><img src="{{ asset('storage/' . $cart->product->image) }}" alt="Product Image" style="width: 100px;"></td>
                     <td>{{ $cart->product->title }}</td>
                     <td>{{ $cart->quantity }}</td>
-                    <td>${{ $cart->product->price }}</td>
-                    <td>${{ $cart->product->price * $cart->quantity }}</td>
+                    @if($cart->product->discount_price)
+                        <td>${{ $cart->product->discount_price }}</td>
+                    @else
+                        <td>${{ $cart->product->price }}</td>
+                    @endif
+                    @if($cart->product->discount_price)
+                        <td>${{ $cart->product->discount_price * $cart->quantity }}</td>
+                    @else
+                        <td>${{ $cart->product->price * $cart->quantity }}</td>
+                    @endif
                     <td>
                         <form action="/delete_from_cart/{{ $cart->id }}" method="post">
                             @csrf
@@ -76,9 +94,14 @@
                     </td>
                 </tr>
                 @php
-                    $total_price += $cart->product->price;
+                if ($cart->product->discount_price){
+                    $total_price = $total_price + ($cart->product->discount_price*$cart->quantity);
+                }else{
+                    $total_price = $total_price + ($cart->product->price * $cart->quantity);
+                }
                 @endphp
             @endforeach
+            @endif
             </tbody>
         </table>
         <div class="total-price">
