@@ -496,6 +496,25 @@ a:focus {
   border: 1px solid #000000;
   color: #ffffff;
 }
+.total-price {
+    width: 13%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: auto; /* Dodaj ovu liniju */
+    padding: 7px;
+    background-color: #5e6061;
+    color: #ffffff;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.total-price span {
+    margin-left: 10px;
+    color: #ffc107;
+}
 .btn-custom {
     background-color:#000000;
     border: 1px ;

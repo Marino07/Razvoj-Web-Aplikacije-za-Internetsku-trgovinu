@@ -54,6 +54,27 @@ class HomeController extends Controller
             return redirect()->back();
         }
     }
+    public function show_cart(){
+        if (!Auth::id()) {
+            return redirect('login');
+        } else {
+
+            $auth_user = Auth::user();
+
+            $carts = Cart::where('user_id', $auth_user->id)->get();
+            return view('home.show_cart', compact('carts'));
+        }
+
+    }
+    public function delete_cart(Cart $cart){
+        if($cart){
+            $cart->delete();
+            return redirect()->back();
+        }
+        else{
+            abort(403,'Cart id  does not exist');
+        }
+    }
 
 
 
