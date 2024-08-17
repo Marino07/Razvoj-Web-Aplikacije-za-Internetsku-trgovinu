@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('payment_method'); // 'card', 'cash', itd.
+            $table->string('payment_method')->default('cash'); // 'card', 'cash', itd.
             $table->string('status')->default('pending'); // 'pending', 'completed', 'cancelled', itd.
-            $table->decimal('total_amount', 10, 2);
+            $table->decimal('total_amount', 10, 2)->min(1);
             $table->timestamps();
-
             // Foreign key constraint
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

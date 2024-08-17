@@ -19,7 +19,6 @@
 
 
     </style>
-
     <!-- Basic -->
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -47,6 +46,17 @@
 <div class="hero_area">
     <!-- header section strats -->
     @include('home.header')
+    <div class="container">
+        @if(session()->has('message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session()->get('message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+    </div>
+
     <div class="container mt-5">
         @php
             $total_price = 0;
@@ -105,10 +115,12 @@
             @endif
             </tbody>
         </table>
-        <div class="total-price">
+            @if(!$carts->isEmpty())
+            <div class="total-price">
             <span>${{$total_price}}</span>
             <a href="#" id="checkout-btn" class="btn-order">Checkout</a>
         </div>
+            @endif
 
     </div>
     <!-- Modal for payment selection -->
@@ -117,13 +129,16 @@
             <span class="close">&times;</span>
             <h3 style="font-style: italic">Payment method</h3>
             <div class="method-buttons">
-                <button class="btn-payment" id="pay-card">Pay by Card</button>
-                <button class="btn-payment" id="pay-cash">Pay by Cash</button>
+                <form  action="/cash/{{$total_price}}" method="POST">
+                    @csrf
+                    <button class="btn-payment" id="pay-cash">Pay by Cash</button>
+                </form>
+
+                <form  action="" method="POST">
+                    @csrf
+                    <button class="btn-payment" id="pay-card">Pay by Card</button>
+                </form>
             </div>
-            <form id="payment-form" style="display: none;" action="/checkout/{{$cart->user_id}}" method="POST">
-                <!-- Additional fields for card payment can go here if needed -->
-                <button type="submit" class="btn-order">Confirm Payment</button>
-            </form>
         </div>
     </div>
     </div>
@@ -138,40 +153,29 @@
 
 </div>
 <script>
+    // Get the modal
     var modal = document.getElementById("paymentModal");
 
-    // Get the button that opens the modal
     var btn = document.getElementById("checkout-btn");
 
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks on the button, open the modal
     btn.onclick = function(event) {
         event.preventDefault(); // Prevent the default action of the anchor
         modal.style.display = "block";
     }
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
 
-    document.getElementById('pay-card').addEventListener('click', function() {
-        document.getElementById('payment-form').style.display = 'block';
-        // Implement any additional logic for card payments
-    });
-
-    document.getElementById('pay-cash').addEventListener('click', function() {
-        document.getElementById('payment-form').style.display = 'block';
-    });
 </script>
 <!-- jQery -->
 <script src="home/js/jquery-3.4.1.min.js"></script>

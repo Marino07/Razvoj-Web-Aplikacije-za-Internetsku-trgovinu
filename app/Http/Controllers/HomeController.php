@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -76,8 +77,19 @@ class HomeController extends Controller
             abort(403,'Cart id  does not exist');
         }
     }
-    public function checkout(User $user){
-        return view('home.checkout',compact('user'));
+    public function checkout($total_price){
+        if ($total_price <= 0){
+            return redirect()->back();
+        }
+        $user = Auth::id();
+        Order::create([
+            'user_id' => $user,
+            'total_amount' => $total_price,
+            'payment_method' => 'cash',
+        ]);
+        Cart::where('user_id',$user)->delete();
+        return redirect()->back()->with('message','Thank you for order');
+
     }
 
 
