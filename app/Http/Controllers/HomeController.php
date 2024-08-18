@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Stripe;
 
 class HomeController extends Controller
 {
@@ -90,6 +92,32 @@ class HomeController extends Controller
         Cart::where('user_id',$user)->delete();
         return redirect()->back()->with('message','Thank you for order');
 
+    }
+    public function stripe($total_price){
+       return view('home.stripe',compact('total_price'));
+    }
+
+    public function stripePost(Request $request,$total_price)
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Stripe\Charge::create ([
+            "amount" => $total_price * 100, // count on cents not dollars so make sure
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Thanks for payment"
+        ]);
+
+        $user = Auth::id();
+        Order::create([
+            'user_id' => $user,
+            'payment_method' => 'credit card',
+            'total_amount' => $total_price,
+        ]);
+        Cart::where('user_id',$user)->delete();
+
+
+        return redirect('/show_cart')->with('message','Thanks for your order');
     }
 
 

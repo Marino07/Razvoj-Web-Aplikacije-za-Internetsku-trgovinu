@@ -134,7 +134,7 @@
                     <button class="btn-payment" id="pay-cash">Pay by Cash</button>
                 </form>
 
-                <form  action="" method="POST">
+                <form  action="/stripe/{{$total_price}}" method="get">
                     @csrf
                     <button class="btn-payment" id="pay-card">Pay by Card</button>
                 </form>

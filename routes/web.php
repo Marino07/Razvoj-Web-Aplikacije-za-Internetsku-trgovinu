@@ -42,6 +42,12 @@ Route::delete('/delete_from_cart/{cart}',[HomeController::class,'delete_cart'])-
 
 Route::post('/cash/{total_price}',[HomeController::class,'checkout'])->name('cash.cart');
 
+Route::get('/stripe/{total_price}',[HomeController::class,'stripe'])->name('stripe.cart');
+
+Route::post('stripes/{total_price}',[HomeController::class, 'stripePost'])->name('stripe.post');
+
+
+
 
 
 
