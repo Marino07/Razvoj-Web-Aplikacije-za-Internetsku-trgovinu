@@ -31,6 +31,13 @@ Route::middleware('admin')->group(function () {
     Route::get('/product/edit/{product}',[AdminController::class,'edit'])->name('product.edit');
     Route::put('/product/update/{product}',[AdminController::class,'update'])->name('product.update');
 
+    Route::get('/orders',[AdminController::class,'orders'])->name('orders.show');
+    Route::get('/order/edit/{order}',[AdminController::class,'edit_order'])->name('order.edit');
+    Route::put('/order/update/{order}',[AdminController::class,'update_order'])->name('order.edit');
+
+
+    Route::delete('/order/delete/{order}',[AdminController::class,'delete_order'])->name('order.delete');
+
 });
 Route::get('/product_details/{product}',[HomeController::class,'product_details'])->name('product.details');
 Route::get('/all_products',[HomeController::class,'all_products'])->name('all.products');
@@ -40,11 +47,12 @@ Route::post('/add_to_cart/{product}',[HomeController::class,'add_to_cart'])->nam
 Route::get('/show_cart',[HomeController::class,'show_cart'])->name('show.cart');
 Route::delete('/delete_from_cart/{cart}',[HomeController::class,'delete_cart'])->name('delete.cart');
 
-Route::post('/cash/{total_price}',[HomeController::class,'checkout'])->name('cash.cart');
+Route::post('/cash/{total_price}',[HomeController::class,'cashpay'])->name('cash.cart');
 
 Route::get('/stripe/{total_price}',[HomeController::class,'stripe'])->name('stripe.cart');
 
 Route::post('stripes/{total_price}',[HomeController::class, 'stripePost'])->name('stripe.post');
+
 
 
 

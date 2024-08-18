@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
@@ -106,6 +107,31 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('show.product')->with('message', 'Product updated successfully.');
+    }
+
+    public function orders(){
+
+        $orders = Order::all();
+
+        return view('admin.orders',compact('orders'));
+    }
+    public function delete_order(Order $order){
+        if($order){
+            $order->delete();
+        }
+        return redirect()->back();
+    }
+    public function edit_order(Order $order){
+        return view('admin.edit_order',compact('order'));
+    }
+    public function update_order(Request $request,Order $order){
+        $order->update([
+            'status' => $request->order_status,
+            'payment_status' => $request->payment_status,
+            'delivered' => $request->delivered
+        ]);
+        return redirect('/orders');
+
     }
 
 

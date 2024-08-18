@@ -79,7 +79,7 @@ class HomeController extends Controller
             abort(403,'Cart id  does not exist');
         }
     }
-    public function checkout($total_price){
+    public function cashpay($total_price){
         if ($total_price <= 0){
             return redirect()->back();
         }
@@ -113,9 +113,9 @@ class HomeController extends Controller
             'user_id' => $user,
             'payment_method' => 'credit card',
             'total_amount' => $total_price,
+            'payment_status' => 'Paid',
         ]);
         Cart::where('user_id',$user)->delete();
-
 
         return redirect('/show_cart')->with('message','Thanks for your order');
     }
