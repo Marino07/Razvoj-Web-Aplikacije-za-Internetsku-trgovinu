@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -79,20 +80,40 @@ class HomeController extends Controller
             abort(403,'Cart id  does not exist');
         }
     }
-    public function cashpay($total_price){
-        if ($total_price <= 0){
-            return redirect()->back();
+    public function cashpay($total_price)
+    {
+        if ($total_price <= 0) {
+            return redirect()->back()->with('error', 'Invalid total price.');
         }
+
         $user = Auth::id();
-        Order::create([
+
+        $order = Order::create([
             'user_id' => $user,
             'total_amount' => $total_price,
             'payment_method' => 'cash',
         ]);
-        Cart::where('user_id',$user)->delete();
-        return redirect()->back()->with('message','Thank you for order');
 
+        $cartItems = Cart::where('user_id', $user)->get();
+
+
+
+        foreach ($cartItems as $item) {
+            $price = $item->product->discount_price ? $item->product->discount_price : $item->product->price;
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $price
+            ]);
+        }
+
+        Cart::where('user_id', $user)->delete();
+
+        return redirect()->back()->with('message', 'Thank you for your order!');
     }
+
     public function stripe($total_price){
        return view('home.stripe',compact('total_price'));
     }
@@ -109,12 +130,25 @@ class HomeController extends Controller
         ]);
 
         $user = Auth::id();
-        Order::create([
+        $order = Order::create([
             'user_id' => $user,
             'payment_method' => 'credit card',
             'total_amount' => $total_price,
             'payment_status' => 'Paid',
         ]);
+        $cartItems = Cart::where('user_id', $user)->get();
+
+
+        foreach ($cartItems as $item) {
+            $price = $item->product->discount_price ? $item->product->discount_price : $item->product->price;
+
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'price' => $price
+            ]);
+        }
         Cart::where('user_id',$user)->delete();
 
         return redirect('/show_cart')->with('message','Thanks for your order');

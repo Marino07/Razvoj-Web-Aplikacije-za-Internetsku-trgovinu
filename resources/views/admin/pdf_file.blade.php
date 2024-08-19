@@ -24,10 +24,10 @@
             font-size: 16px;
             margin: 5px 0;
         }
-        .customer-details, .order-summary {
+        .customer-details, .order-summary, .order-items {
             margin-bottom: 20px;
         }
-        .customer-details p, .order-summary p {
+        .customer-details p, .order-summary p, .order-items p {
             margin: 0 0 5px;
         }
         .table {
@@ -63,7 +63,6 @@
 
 <div class="header">
     <h2>Order Details</h2>
-    <p><strong>Order ID:</strong> #{{ $order->id }}</p>
     <p><strong>Order Date:</strong> {{ $order->created_at->format('d M, Y') }}</p>
 </div>
 
@@ -94,6 +93,34 @@
             <td class="total-amount">${{ number_format($order->total_amount, 2) }}</td>
         </tr>
         </tbody>
+    </table>
+</div>
+
+<div class="order-items">
+    <h3>Order Items</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price per Unit</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($order->orderItems as $item)
+            <tr>
+                <td>{{ $item->product->title }}</td>
+                <td>{{ $item->quantity }}</td>
+                <td>${{ number_format($item->price, 2) }}</td>
+            </tr>
+        @endforeach
+        </tbody>
+        <tfoot>
+        <tr class="total-row">
+            <td colspan="3">Grand Total</td>
+            <td>${{ number_format($order->total_amount, 2) }} + PDV</td>
+        </tr>
+        </tfoot>
     </table>
 </div>
 

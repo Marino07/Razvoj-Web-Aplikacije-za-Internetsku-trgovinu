@@ -6,6 +6,7 @@
 /public/admin
 /storage/*.key
 /vendor
+/public/pdfs/
 .env
 .env.backup
 .env.production
