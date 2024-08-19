@@ -33,7 +33,9 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/orders',[AdminController::class,'orders'])->name('orders.show');
     Route::get('/order/edit/{order}',[AdminController::class,'edit_order'])->name('order.edit');
-    Route::put('/order/update/{order}',[AdminController::class,'update_order'])->name('order.edit');
+    Route::put('/order/update/{order}',[AdminController::class,'update_order'])->name('order.update');
+
+    Route::get('/order/download/{order}',[AdminController::class,'download_pdf'])->name('order.pdf');
 
 
     Route::delete('/order/delete/{order}',[AdminController::class,'delete_order'])->name('order.delete');

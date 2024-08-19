@@ -78,6 +78,9 @@
                 display: block;
                 width: 100%;
             }
+            .btn-3{
+                width: 66px; !important;
+            }
 
             table tr {
                 margin-bottom: 15px;
@@ -139,24 +142,22 @@
                         <td data-label="Customer Name">{{$order->user->phone}}</td>
                         <td data-label="Total Price">{{$order->total_amount}}</td>
                         <td style="padding-left: 30px;!important; " data-label="Payment Method">{{{$order->payment_method}}}</td>
-                        @switch($order->status)
-                            @case('Completed')
+
+                        @if($order->status === 'Completed')
                             <td style="color: #3e8e41" data-label="Order Status">{{$order->status}}</td>
-                                @break
-                            @case( 'Processing')
-                            <td style="color: #aa5500" data-label="Order Status">{{$order->status}}</td>
-                                @break
-                            @case('Cancelled')
+                        @elseif($order->status === 'Processing')
+                            <td style="color: #aa5500" data-label="Order Status">{{ $order->status }}</td>
+                        @elseif($order->status === 'Cancelled')
                             <td style="color: #ee040e" data-label="Order Status">{{$order->status}}</td>
-                            @break
-                            @default
-                            <td  data-label="Order Status">{{$order->status}}</td>
-                        @endswitch
+                        @endif
+
 
                         <td style="" data-label="Order Date">{{$order->created_at}}</td>
 
                         <td data-label="Actions">
                             <a href="/order/edit/{{$order->id}}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="/order/download/{{$order->id}}" target="_blank" class="btn btn-primary btn-3"><i class="fa fa-print"></i>PDF</a>
+
 
                             <!--<a href="/admin/orders/{{$order->id}}/delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a> -->
                         </td>

@@ -56,20 +56,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="order_status">Order Status</label>
-                    <select class="form-control" id="order_status" name="order_status" required>
-                        <option value="Pending" {{ $order->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                        <option value="Processing" {{ $order->status == 'Processing' ? 'selected' : '' }}>Processing</option>
-                        <option value="Completed" {{ $order->status == 'Completed' ? 'selected' : '' }}>Completed</option>
-                        <option value="Cancelled" {{ $order->status == 'Cancelled' ? 'selected' : '' }}>Cancelled</option>
+                    <label for="postpended">Postpended</label>
+                    <select name="postpended" id="postpended" class="form-control">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
                     </select>
                 </div>
-
                 <div class="form-group">
-                    <label for="order_date">Order Date</label>
-                    <input  style="background-color: #2f323a" type="text" class="form-control" id="order_date" name="order_date" value="{{ $order->created_at->format('Y-m-d') }}" readonly>
+                    <label for="customer_name">Order status</label>
+                    <input style="background-color: #2f323a;" type="text" class="form-control" id="order_status" name="order_status" value="{{ $order->status}}" required readonly>
                 </div>
-
                 <button type="submit" class="btn btn-primary btn-custom">Update Order</button>
                 <a href="/orders" class="btn btn-danger btn-custom">Cancel</a>
             </form>

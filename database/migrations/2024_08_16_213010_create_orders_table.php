@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('payment_method')->default('cash'); // 'card', 'cash', itd.
-            $table->string('status')->default('pending');// 'pending', 'completed', 'cancelled', itd.
-            $table->string('payment_status')->default('Unpaid'); // 'pending', 'completed', 'cancelled', itd.
-            $table->string('delivered')->default('No'); // 'pending', 'completed', 'cancelled', itd.
+            $table->string('status')->default('Processing');
+            $table->string('payment_status')->default('Unpaid');
+            $table->string('delivered')->default('No');
             $table->decimal('total_amount', 10, 2)->min(1);
             $table->timestamps();
             // Foreign key constraint

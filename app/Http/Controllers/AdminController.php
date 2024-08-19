@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 
@@ -124,15 +125,36 @@ class AdminController extends Controller
     public function edit_order(Order $order){
         return view('admin.edit_order',compact('order'));
     }
-    public function update_order(Request $request,Order $order){
+    public function update_order(Request $request, Order $order)
+    {
+        $order_status = $request->order_status;
+
+        if ($request->postpended === 'Yes') {
+            $order_status = 'Cancelled';
+        } elseif ($request->payment_status === 'Paid' && $request->delivered === 'Yes') {
+            $order_status = 'Completed';
+        } elseif ($request->payment_status === 'Unpaid' || $request->delivered === 'No') {
+            $order_status = 'Processing';
+        }
+
         $order->update([
-            'status' => $request->order_status,
+            'status' => $order_status,
             'payment_status' => $request->payment_status,
             'delivered' => $request->delivered
         ]);
+
         return redirect('/orders');
+    }
+    public function download_pdf(Order $order)
+    {
+        $pdf = Pdf::loadView('admin.pdf_file', compact('order'));
+        $pdfPath = public_path('pdfs/order_' . $order->id . '.pdf');
+        $pdf->save($pdfPath);
+        return redirect('/pdfs/order_' . $order->id . '.pdf');
 
     }
+
+
 
 
 
