@@ -145,6 +145,19 @@ class AdminController extends Controller
 
         return redirect('/orders');
     }
+    public function all_orders_delete(){
+
+        $status1 = 'Completed';
+        $status2 = 'Cancelled';
+
+        $orders = Order::whereIn('status',[$status1,$status2])->get();
+        foreach ($orders as $order){
+            $order->delete();
+        }
+
+        return redirect()->back();
+
+    }
     public function download_pdf(Order $order)
     {
         $pdf = Pdf::loadView('admin.pdf_file', compact('order'));

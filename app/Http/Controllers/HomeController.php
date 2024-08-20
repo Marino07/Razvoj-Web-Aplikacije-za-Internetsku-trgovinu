@@ -96,8 +96,6 @@ class HomeController extends Controller
 
         $cartItems = Cart::where('user_id', $user)->get();
 
-
-
         foreach ($cartItems as $item) {
             $price = $item->product->discount_price ? $item->product->discount_price : $item->product->price;
 
@@ -152,6 +150,11 @@ class HomeController extends Controller
         Cart::where('user_id',$user)->delete();
 
         return redirect('/show_cart')->with('message','Thanks for your order');
+    }
+    public function show_orders(){
+        $user = Auth::id();
+        $orders = Order::where('user_id',$user)->get();
+        return view('home.show_orders',compact('orders'));
     }
 
 

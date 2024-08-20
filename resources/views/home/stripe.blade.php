@@ -169,7 +169,6 @@
                     exp_year: $('.card-expiry-year').val()
                 }, stripeResponseHandler);
             }
-
         });
 
         function stripeResponseHandler(status, response) {

@@ -34,6 +34,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/orders',[AdminController::class,'orders'])->name('orders.show');
     Route::get('/order/edit/{order}',[AdminController::class,'edit_order'])->name('order.edit');
     Route::put('/order/update/{order}',[AdminController::class,'update_order'])->name('order.update');
+    Route::delete('/delete/orders_all',[AdminController::class,'all_orders_delete'])->name('orders.deleteAll');
 
     Route::get('/order/download/{order}',[AdminController::class,'download_pdf'])->name('order.pdf');
 
@@ -54,6 +55,7 @@ Route::post('/cash/{total_price}',[HomeController::class,'cashpay'])->name('cash
 Route::get('/stripe/{total_price}',[HomeController::class,'stripe'])->name('stripe.cart');
 
 Route::post('stripes/{total_price}',[HomeController::class, 'stripePost'])->name('stripe.post');
+Route::get('/show_orders',[HomeController::class,'show_orders']);
 
 
 
