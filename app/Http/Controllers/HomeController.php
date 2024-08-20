@@ -156,6 +156,12 @@ class HomeController extends Controller
         $orders = Order::where('user_id',$user)->get();
         return view('home.show_orders',compact('orders'));
     }
+    public function cancel_order(Order $order){
+        $order->update([
+           'status' => 'Cancelled'
+        ]);
+        return redirect()->back();
+    }
 
 
 

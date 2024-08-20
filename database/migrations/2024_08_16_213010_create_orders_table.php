@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('payment_method')->default('cash'); // 'card', 'cash', itd.
-            $table->string('status')->default('Processing');
+            $table->string('status')->default('Pending');
             $table->string('payment_status')->default('Unpaid');
             $table->string('delivered')->default('No');
             $table->decimal('total_amount', 10, 2)->min(1);

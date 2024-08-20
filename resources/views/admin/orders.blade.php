@@ -78,9 +78,6 @@
                 display: block;
                 width: 100%;
             }
-            .btn-3{
-                width: 66px; !important;
-            }
 
             table tr {
                 margin-bottom: 15px;
@@ -125,12 +122,14 @@
                     <th>Customer Name</th>
                     <th> Address</th>
                     <th style="padding-left: 35px"> Phone</th>
-                    <th>Total Price</th>
                     <th>Payment Method</th>
                     <th>Order Status</th>
                     <th style="padding-left: 35px">Order Date</th>
+                    <th>Total Price</th>
+
 
                     <th>Actions</th> <!-- Stupac Actions ostaje poravnat desno -->
+                    <th>Base</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -140,7 +139,6 @@
                         <td data-label="Customer Name">{{$order->user->name}}</td>
                         <td data-label="Customer Name">{{$order->user->address}}</td>
                         <td data-label="Customer Name">{{$order->user->phone}}</td>
-                        <td data-label="Total Price">{{$order->total_amount}}</td>
                         <td style="padding-left: 30px;!important; " data-label="Payment Method">{{{$order->payment_method}}}</td>
 
                         @if($order->status === 'Completed')
@@ -149,18 +147,30 @@
                             <td style="color: #aa5500" data-label="Order Status">{{ $order->status }}</td>
                         @elseif($order->status === 'Cancelled')
                             <td style="color: #ee040e" data-label="Order Status">{{$order->status}}</td>
+                        @elseif($order->status === 'Pending')
+                            <td style="color: #5E50F9" data-label="Order Status">{{$order->status}}</td>
                         @endif
 
 
                         <td style="" data-label="Order Date">{{$order->created_at}}</td>
+                        <td data-label="Total Price"><strong>${{$order->total_amount}}</strong></td>
+
 
                         <td data-label="Actions">
+                            <a href="/order/download/{{$order->id}}" target="_blank" class="btn btn-primary "><i class="fa fa-print"></i>PDF</a>
                             <a href="/order/edit/{{$order->id}}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
-                            <a href="/order/download/{{$order->id}}" target="_blank" class="btn btn-primary btn-3"><i class="fa fa-print"></i>PDF</a>
-
-
                             <!--<a href="/admin/orders/{{$order->id}}/delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a> -->
                         </td>
+                        @if($order->status === 'Pending')
+                            <td><form action="/order/accept/{{$order->id}}" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-secondary">Accept</button>
+                                </form></td>
+                        @else
+                            <td>Not available</td>
+                        @endif
+
                     </tr>
                 @endforeach
                 </tbody>

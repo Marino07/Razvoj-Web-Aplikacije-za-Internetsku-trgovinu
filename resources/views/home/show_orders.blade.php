@@ -127,6 +127,7 @@
                 <th>Order Status</th>
                 <th style="padding-left: 35px">Order Date</th>
                 <th>Total Price</th>
+                <th>Action</th>
 
 
             </tr>
@@ -143,12 +144,24 @@
                         <td style="color: #aa5500" data-label="Order Status">{{ $order->status }}</td>
                     @elseif($order->status === 'Cancelled')
                         <td style="color: #ee040e" data-label="Order Status">{{$order->status}}</td>
-                    @endif
+                    @elseif($order->status === 'Pending')
+                        <td style="color: #5E50F9" data-label="Order Status">{{$order->status}}</td>
 
+                    @endif
 
                     <td  data-label="Order Date">{{$order->created_at}}</td>
                     <td  data-label="Total Price"><strong>${{$order->total_amount}}</strong></td>
-
+                    @if($order->status === 'Pending')
+                        <td>
+                            <form action="/cancel_order/{{$order->id}}" method="post">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit" class="btn btn-danger rounded-pill" >Cancel</button>
+                            </form>
+                        </td>
+                    @else
+                        <td><strong>Expired</strong></td>
+                    @endif
 
 
                 </tr>

@@ -158,6 +158,12 @@ class AdminController extends Controller
         return redirect()->back();
 
     }
+    public function accept_order(Order $order){
+        $order->update([
+            'status' => 'Processing'
+        ]);
+        return redirect()->back();
+    }
     public function download_pdf(Order $order)
     {
         $pdf = Pdf::loadView('admin.pdf_file', compact('order'));
