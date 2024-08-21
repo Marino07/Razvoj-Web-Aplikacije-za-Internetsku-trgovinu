@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
+use App\Notifications\MyFirstNotification;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Intervention\Image\ImageManager;
+use App\Notifications;
 
 class AdminController extends Controller
 {
@@ -158,12 +161,27 @@ class AdminController extends Controller
         return redirect()->back();
 
     }
-    public function accept_order(Order $order){
+    public function accept_order(Order $order)
+    {
         $order->update([
             'status' => 'Processing'
         ]);
+        $user = $order->user;
+
+        $details = [
+            'greeting' => 'WE ACCEPT YOUR ORDER',
+            'firstline' => 'Order id:#' . ''. $order->id,
+            'body' => 'Thank you,'. ' ' . $order->user->name,
+            'lastline' => 'Stay tuned!'
+        ];
+
+        if ($user) {
+            $user->notify(new MyFirstNotification($details));
+        }
+
         return redirect()->back();
     }
+
     public function download_pdf(Order $order)
     {
         $pdf = Pdf::loadView('admin.pdf_file', compact('order'));
