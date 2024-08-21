@@ -152,7 +152,11 @@ class HomeController extends Controller
         return redirect('/show_cart')->with('message','Thanks for your order');
     }
     public function show_orders(){
+
         $user = Auth::id();
+        if(!$user){
+            return redirect('login');
+        }
         $orders = Order::where('user_id',$user)->get();
         return view('home.show_orders',compact('orders'));
     }
