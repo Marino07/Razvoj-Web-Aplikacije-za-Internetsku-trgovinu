@@ -36,6 +36,17 @@ class HomeController extends Controller
     public function product_details(Product $product) {
         return view('home.product_details', compact('product'));
     }
+    public function search(Request $request){
+        $search = $request->search;
+        $products = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->where(function($query) use ($search) {
+                $query->where('products.title', 'LIKE', "%" . $search . "%")
+                    ->orWhere('categories.category_name', 'LIKE', "%" . $search . "%");
+            })
+            ->select('products.*')
+            ->paginate(6);
+        return view('home.userpage',compact('products'));
+    }
 
     public function add_to_cart(Product $product) {
         if (!Auth::id()) {

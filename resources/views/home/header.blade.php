@@ -13,7 +13,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="product.html">Products</a>
+                        <a class="nav-link" href="{{url('/')}}#trazilica">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/show_orders">My orders</a>
@@ -24,12 +24,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/show_cart">Cart</a>
                     </li>
-                    <form class="form-inline">
+                    <form class="form-inline" action="{{url('/')}}#trazilica">
                         <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
                     </form>
-                    @if (Route::has('login'))
+                    @if (Route::has('login')) <!-- bilo koja ruta se mogla stavit -->
                         @auth
                             <li class="nav-item">
                                 <form method="POST" action="{{ route('logout') }}">

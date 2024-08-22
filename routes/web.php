@@ -42,10 +42,12 @@ Route::middleware('admin')->group(function () {
 
     Route::delete('/order/delete/{order}',[AdminController::class,'delete_order'])->name('order.delete');
     Route::put('/order/accept/{order}',[AdminController::class,'accept_order']);
+    Route::get('/search',[AdminController::class,'search'])->name('order.search');
 
 });
 Route::get('/product_details/{product}',[HomeController::class,'product_details'])->name('product.details');
 Route::get('/all_products',[HomeController::class,'all_products'])->name('all.products');
+Route::get('/search_home',[HomeController::class,'search'])->name('search.products');
 
 
 Route::post('/add_to_cart/{product}',[HomeController::class,'add_to_cart'])->name('product.cart');
@@ -59,6 +61,7 @@ Route::get('/stripe/{total_price}',[HomeController::class,'stripe'])->name('stri
 Route::post('stripes/{total_price}',[HomeController::class, 'stripePost'])->name('stripe.post');
 Route::get('/show_orders',[HomeController::class,'show_orders']);
 Route::put('/cancel_order/{order}',[HomeController::class,'cancel_order']);
+
 
 
 

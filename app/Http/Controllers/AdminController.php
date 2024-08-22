@@ -190,8 +190,22 @@ class AdminController extends Controller
         return redirect('/pdfs/order_' . $order->id . '.pdf');
 
     }
+    public function search(Request $request){
 
+        $searchName = $request->search;
 
+        $orders = Order::with('user')
+            ->whereHas('user', function ($query) use ($searchName) {
+                $query->where('name', 'like', '%' . $searchName . '%');
+            })
+            ->get();
+
+        if($orders->isEmpty()){
+            return redirect()->back()->with('message','It seems there is not user named like that in orders');
+        }
+
+        return view('admin.orders',compact('orders'));
+    }
 
 
 

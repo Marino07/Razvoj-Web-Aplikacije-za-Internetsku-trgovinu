@@ -1,12 +1,22 @@
-
+<head><base href="/public"></head>
 <section class="product_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
             <h2>
                 Our <span>products</span>
             </h2>
+        <div id="trazilica">
+            <form style="padding-top: 25px; padding-left: 60px; width: 500px" action="{{ url('/search_home') }}#trazilica" method="get" class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                @csrf
+                <input type="text" name="search" class="form-control" placeholder="Search products">
+                <button style="padding-bottom: 40px" class="btn my-2 my-sm-0 nav_search-btn" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </form>
+
         </div>
-        <div class="row">
+        </div>
+        <div class="row" id="products">
             @foreach($products as $product)
                 <div class="col-sm-6 col-md-4 col-lg-4">
                     <div class="box">

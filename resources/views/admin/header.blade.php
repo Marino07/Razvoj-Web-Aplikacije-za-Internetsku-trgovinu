@@ -7,13 +7,18 @@
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                 <span class="mdi mdi-menu"></span>
             </button>
-            <ul class="navbar-nav w-100">
-                <li class="nav-item w-100">
-                    <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                        <input type="text" class="form-control" placeholder="Search products">
-                    </form>
-                </li>
-            </ul>
+            @if(Request::is('orders') || Request::is('search'))
+                <ul class="navbar-nav w-100">
+                    <li class="nav-item w-100">
+                        <form action="/search" method="get" class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                            @csrf
+                            <input type="text" name="search" class="form-control" placeholder="Search products">
+                        </form>
+                    </li>
+                </ul>
+            @endif
+
+
             <ul class="navbar-nav navbar-nav-right">
                 @if (Request::is('orders'))
                     <li class="nav-item dropdown d-none d-lg-block">
