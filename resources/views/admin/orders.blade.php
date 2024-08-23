@@ -130,14 +130,16 @@
                     <th>Order ID</th>
                     <th>Customer Name</th>
                     <th> Address</th>
-                    <th style="padding-left: 35px"> Phone</th>
+                    <th style="padding-left: 20px"> Phone</th>
                     <th>Payment Method</th>
                     <th>Order Status</th>
-                    <th style="padding-left: 35px">Order Date</th>
-                    <th>Total Price</th>
+                    <th style="padding-left: 15px">Order Date</th>
+                    <th style="padding-left: 30px">Total Price</th>
 
 
-                    <th>Actions</th> <!-- Stupac Actions ostaje poravnat desno -->
+                    <th>Modify</th> <!-- Stupac Actions ostaje poravnat desno -->
+                    <th style="padding-left: 25px">PDF</th> <!-- Stupac Actions ostaje poravnat desno -->
+
                     <th>Base</th>
                 </tr>
                 </thead>
@@ -166,15 +168,16 @@
 
 
                         <td data-label="Actions">
-                            <a href="/order/download/{{$order->id}}" target="_blank" class="btn btn-primary "><i class="fa fa-print"></i>PDF</a>
-                            <a href="/order/edit/{{$order->id}}" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</a>
+                            <a href="/order/edit/{{$order->id}}" class="btn btn-warning">Edit</a>
                             <!--<a href="/admin/orders/{{$order->id}}/delete" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a> -->
+                        </td>
+                        <td> <a  href="/order/download/{{$order->id}}" target="_blank" class="btn btn-primary ">PDF</a>
                         </td>
                         @if($order->status === 'Pending')
                             <td><form action="/order/accept/{{$order->id}}" method="post">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-secondary">Accept</button>
+                                    <button type="submit" class="btn btn-outline-behance">Accept</button>
                                 </form></td>
                         @else
                             <td>Not available</td>

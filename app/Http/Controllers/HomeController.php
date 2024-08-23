@@ -15,12 +15,19 @@ use Stripe;
 class HomeController extends Controller
 {
     public function redirect() {
-        $products = Product::orderBy('created_at', 'desc')->paginate(6);
+        $products_home = Product::orderBy('created_at', 'desc')->paginate(6);
+        $products_admin = Product::all();
+        $all_orders = Order::all();
+        $order_customer = Order::distinct('user_id')->count('user_id');
+        $sum = 0;
+        foreach ($all_orders as $order){
+            $sum += $order->total_amount;
+        }
         $usertype = Auth::user()->usertype;
         if ($usertype == '1') {
-            return view('admin.home', compact('products'));
+            return view('admin.dashboard',['products' => $products_admin,'orders'=> $all_orders,'customers' => $order_customer,'total_price'=> $sum]);
         } else {
-            return view('home.userpage', compact('products'));
+            return view('home.userpage', ['products' => $products_home]);
         }
     }
 
