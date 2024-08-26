@@ -56,28 +56,43 @@ class HomeController extends Controller
     }
 
     public function add_to_cart(Product $product) {
+        // Provjera da li je korisnik prijavljen
         if (!Auth::id()) {
             return redirect('login');
-        } else {
-            $auth_user = Auth::user();
+        }
 
-            $existing_cart_item = Cart::where('user_id', $auth_user->id)
-                ->where('product_id', $product->id)
-                ->first();
+        $auth_user = Auth::user();
 
-            if ($existing_cart_item) {
+
+        // Pronalazak postojećeg artikla u korpi za trenutnog korisnika
+        $existing_cart_item = Cart::where('user_id', $auth_user->id)
+            ->where('product_id', $product->id)
+            ->first();
+
+        if ($existing_cart_item) {
+            // Provjera da li ima dovoljno proizvoda na zalihama
+            if ($product->quantity > $existing_cart_item->quantity) {
                 $existing_cart_item->quantity += 1;
                 $existing_cart_item->save();
             } else {
+                abort(403, 'Not enough quantity');
+            }
+        } else {
+            if ($product->quantity > 0) {
                 Cart::create([
                     'product_id' => $product->id,
                     'user_id' => $auth_user->id,
                     'quantity' => 1,
                 ]);
+            } else {
+                abort(403, 'Product is out of stock');
             }
-            return redirect()->back();
         }
+
+
+        return redirect()->back();
     }
+
     public function show_cart(){
         if (!Auth::id()) {
             return redirect('login');
@@ -123,6 +138,10 @@ class HomeController extends Controller
                 'quantity' => $item->quantity,
                 'price' => $price
             ]);
+
+            $product = $item->product;
+            $product->quantity -= $item->quantity;
+            $product->save();
         }
 
         Cart::where('user_id', $user)->delete();
@@ -164,6 +183,9 @@ class HomeController extends Controller
                 'quantity' => $item->quantity,
                 'price' => $price
             ]);
+            $product = $item->product;
+            $product->quantity -= $item->quantity;
+            $product->save();
         }
         Cart::where('user_id',$user)->delete();
 
@@ -178,12 +200,28 @@ class HomeController extends Controller
         $orders = Order::where('user_id',$user)->get();
         return view('home.show_orders',compact('orders'));
     }
-    public function cancel_order(Order $order){
+    public function cancel_order(Order $order)
+    {
         $order->update([
-           'status' => 'Cancelled'
+            'status' => 'Cancelled'
         ]);
-        return redirect()->back();
+
+        $order_items = OrderItem::where('order_id', $order->id)->get();
+
+        foreach ($order_items as $item) {
+            $product = Product::find($item->product_id);
+            if ($product) {
+                $product->quantity += $item->quantity;
+                $product->save();
+            }
+        }
+        // dodati nekad : Brisanje narudžbe i stavki narudžbe
+        // OrderItem::where('order_id', $order->id)->delete();
+        // $order->delete();
+
+        return redirect()->back()->with('message', 'Order has been cancelled and products quantity has been restored.');
     }
+
 
 
 

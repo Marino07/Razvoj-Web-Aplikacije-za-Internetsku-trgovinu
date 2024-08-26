@@ -159,10 +159,11 @@
                                 <button type="submit" class="btn btn-danger rounded-pill" >Cancel</button>
                             </form>
                         </td>
+                    @elseif($order->status === 'Cancelled')
+                        <td><strong>Cancelled</strong></td>
                     @else
                         <td><strong>Expired</strong></td>
                     @endif
-
 
                 </tr>
             @endforeach

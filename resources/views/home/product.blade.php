@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="img-box">
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="Picture not working at the moment" class="img-fluid">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="Picture not working at the moment" class="img-fluid" style="{{ $product->quantity <= 0 ? 'filter: grayscale(100%);' : '' }}" >
                         </div>
                         <div class="detail-box">
                             <h5>
