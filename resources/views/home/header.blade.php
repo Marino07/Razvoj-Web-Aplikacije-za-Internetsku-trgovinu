@@ -2,7 +2,7 @@
 <header class="header_section">
     <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-            <a class="navbar-brand" href="/"><img width="250" src="images/logo.png" alt="#" /></a>
+            <a class="navbar-brand" href="/"><img width="250" src="{{asset('images/logo.png')}}" alt="#" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class=""> </span>
             </button>
@@ -19,10 +19,11 @@
                         <a class="nav-link" href="/show_orders">My orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="show_.html">Contact</a>
+                        <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/show_cart">Cart</a>
+                        <a class="nav-link" href="/show_cart">
+                            Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                     </li>
                     <form class="form-inline" action="{{url('/')}}#trazilica">
                         <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">

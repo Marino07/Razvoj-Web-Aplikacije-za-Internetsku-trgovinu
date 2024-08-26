@@ -1,4 +1,6 @@
-<head><base href="/public"></head>
+<head>
+
+</head>
 <section class="product_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">

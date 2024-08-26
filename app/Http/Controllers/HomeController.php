@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Stripe;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class HomeController extends Controller
 {
@@ -63,7 +64,6 @@ class HomeController extends Controller
 
         $auth_user = Auth::user();
 
-
         // Pronalazak postojećeg artikla u korpi za trenutnog korisnika
         $existing_cart_item = Cart::where('user_id', $auth_user->id)
             ->where('product_id', $product->id)
@@ -74,8 +74,10 @@ class HomeController extends Controller
             if ($product->quantity > $existing_cart_item->quantity) {
                 $existing_cart_item->quantity += 1;
                 $existing_cart_item->save();
+                Alert::success('Product added succesfully','We have added product to the cart');
+
             } else {
-                abort(403, 'Not enough quantity');
+                Alert::warning('We are out of this product   ','Sorry');
             }
         } else {
             if ($product->quantity > 0) {
@@ -84,13 +86,15 @@ class HomeController extends Controller
                     'user_id' => $auth_user->id,
                     'quantity' => 1,
                 ]);
+                Alert::success('Product added succesfully','We have added product to the cart');
+
             } else {
-                abort(403, 'Product is out of stock');
+                Alert::warning('We are out of this product  ','We are so sorry');
             }
         }
 
 
-        return redirect()->back();
+        return redirect()->back()->withFragment('trazilica'); // sidro
     }
 
     public function show_cart(){
@@ -219,7 +223,7 @@ class HomeController extends Controller
         // OrderItem::where('order_id', $order->id)->delete();
         // $order->delete();
 
-        return redirect()->back()->with('message', 'Order has been cancelled and products quantity has been restored.');
+        return redirect()->back()->with('message', 'Order has been cancelled');
     }
 
 
