@@ -32,6 +32,32 @@
         .table th, .table td {
             text-align: center;
         }
+        input[type="file"] {
+            border: 1px solid #ccc; /* Svijetlo siva boja obruba */
+            background-color: #b8e0f8; /* Svijetlo siva boja pozadine */
+            color: #333; /* Tamno siva boja teksta */
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box; /* Uključuje border i padding u širinu */
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background-color: #007bff; /* Svijetlo plava boja za dugme */
+            border: none;
+            color: #ffffff;
+            padding: 8px 12px; /* Smanjena veličina dugmeta */
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background-color: #0056b3; /* Tamnija plava boja pri hoveru */
+        }
+        .error {
+            color: #ff6f6f;
+            font-size: 14px;
+        }
     </style>
     @include('admin.css')
 </head>
@@ -129,16 +155,14 @@
 
                 <!-- Greške za "image" polje -->
                 <div class="form-group">
-                    <label for="image">Image</label>
-                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
+                    <label for="image">Product Image</label><br>
+                    <input type="file" id="image" name="image">
                     @error('image')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
+                    <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-secondary rounded-pill">Add Product</button>
+                <button style="margin-top: 15px;" type="submit" class="btn btn-facebook rounded-pill">Add Product</button>
             </form>
         </div>
 

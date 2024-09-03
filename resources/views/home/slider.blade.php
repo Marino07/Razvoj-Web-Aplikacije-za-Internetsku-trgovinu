@@ -1,6 +1,5 @@
 <section class="slider_section ">
     <div class="slider_bg_box">
-        <img src="{{asset('images/slider-bg.jpg')}}" alt="">
     </div>
     <div id="customCarousel1" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
@@ -17,7 +16,7 @@
                                     On Everything
                                 </h1>
                                 <p>
-                                    Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
+                                    Enjoy incredible savings on all our products! Discover a wide range of items at unbeatable prices. Don't miss out on this fantastic opportunity to grab your favorites while stocks last. Shop now and experience quality and affordability like never before!
                                 </p>
                                 <div class="btn-box">
                                     <a href="" class="btn1">

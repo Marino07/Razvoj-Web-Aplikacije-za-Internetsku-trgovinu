@@ -130,8 +130,8 @@
                     <th>Order ID</th>
                     <th>Customer Name</th>
                     <th> Address</th>
-                    <th style="padding-left: 20px"> Phone</th>
-                    <th>Payment Method</th>
+                    <th style="padding-left: 15px"> Phone</th>
+                    <th style="padding-left: 25px">Payment Method</th>
                     <th>Order Status</th>
                     <th style="padding-left: 15px">Order Date</th>
                     <th style="padding-left: 30px">Total Price</th>

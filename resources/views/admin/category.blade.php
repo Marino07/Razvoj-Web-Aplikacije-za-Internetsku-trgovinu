@@ -27,6 +27,8 @@
 
         .table-container {
             margin-top: 30px;
+            border: 2px solid #002b45;
+
         }
 
         .table th, .table td {
@@ -57,7 +59,7 @@
                     <label for="categoryName">Category Name</label>
                     <input type="text" class="form-control" id="categoryName" name="category_name" placeholder="Write category name">
                 </div>
-                <button type="submit" class="btn btn-secondary rounded-pill">Add Category</button>
+                <button type="submit" class="btn btn-facebook rounded-pill">Add Category</button>
             </form>
         </div>
 

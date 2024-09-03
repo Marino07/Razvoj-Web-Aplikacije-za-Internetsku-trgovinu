@@ -343,6 +343,7 @@ a:focus {
 }
 
 .slider_bg_box {
+  background-color:#d6d2d2;
   position: absolute;
   top: 0;
   left: 0;
@@ -429,7 +430,7 @@ a:focus {
           transform: translateY(0);
 }
 .arrival_section {
-    background-color: #d4ced0;
+    background-color: #d6d2d2;
 }
 .product_section .option_container {
   position: absolute;
@@ -712,8 +713,13 @@ a:focus {
 }
 
 .arrival_section .box {
-  padding: 120px 45px;
+  padding: 120px 50px;
   position: relative;
+}
+.limited-width {
+    max-width: 400px; /* Maksimalna širina za paragraf */
+    word-wrap: break-word; /* Omogućava prelamanje riječi */
+    padding-left: 20px; /* Pomicanje ulijevo */
 }
 
 .arrival_section .arrival_bg_box {

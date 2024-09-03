@@ -174,6 +174,7 @@ class HomeController extends Controller
             'payment_method' => 'credit card',
             'total_amount' => $total_price,
             'payment_status' => 'Paid',
+            'status' => 'Processing',
         ]);
         $cartItems = Cart::where('user_id', $user)->get();
 

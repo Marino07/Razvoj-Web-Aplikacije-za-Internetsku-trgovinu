@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-
-    </style>
     <!-- Basic -->
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -13,8 +10,8 @@
     <meta name="keywords" content=""/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="">
-    <title>Famms - Fashion HTML Template</title>
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" type="">
+    <title>Meat Tech</title>
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="{{asset('home/css/bootstrap.css')}}"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
@@ -42,8 +39,6 @@
 
 
     <!-- arrival section -->
-    @include('home.new_arrival')
-
 <!-- end arrival section -->
 
     <!-- product section -->
@@ -57,7 +52,7 @@
     <!-- client section -->
 
     <!-- end client section -->
-    @include('home.client')
+
     <!-- footer start -->
     @include('home.footer')
     <!-- footer end -->
@@ -72,5 +67,16 @@
     <script src="home/js/bootstrap.js"></script>
     <!-- custom js -->
     <script src="home/js/custom.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dohvati sve paginacijske linkove
+        const paginationLinks = document.querySelectorAll('.pagination a');
+
+        paginationLinks.forEach(function(link) {
+            // Dodaj sidro na kraj svakog URL-a
+            link.href += '#products';
+        });
+    });
+</script>
 </body>
 </html>

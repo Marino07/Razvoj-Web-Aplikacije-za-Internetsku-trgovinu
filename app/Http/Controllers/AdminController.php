@@ -98,6 +98,19 @@ class AdminController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validacija slike
         ]);
 
+        $imagePath = $product->image;
+
+        if ($request->hasFile('image')) {
+            // Store the image
+            $imagePath = $request->file('image')->store('products', 'public');
+
+            // Process the image if necessary
+            $image = ImageManager::imagick()->read(storage_path("app/public/{$imagePath}")); // Ensure correct path
+            $image->resize(1200, 800);
+            $image->save();
+        }
+
+
         // Ažuriranje podataka proizvoda
         $product->update([
             'title' => $validateData['title'],
@@ -107,7 +120,7 @@ class AdminController extends Controller
             'quantity' => $validateData['quantity'],
             'category_id' => $validateData['category_id'], // Promijenjeno na category_id
             // Obrada slike
-            'image' => $request->hasFile('image') ? $request->file('image')->store('public/images') : $product->image, // Ako postoji nova slika, pohrani je
+            'image' => $imagePath
         ]);
 
         return redirect()->route('show.product')->with('message', 'Product updated successfully.');

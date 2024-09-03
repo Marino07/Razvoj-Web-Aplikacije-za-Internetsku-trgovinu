@@ -6,75 +6,96 @@
     <title>Update Product Form</title>
     <style>
         body {
-            background-color: #121212;
-            color: #e0e0e0;
+            background-color: #1b1e21; /* Svijetlo siva pozadina za tijelo */
+            color: #c2c2c2; /* Tamno siva boja teksta */
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 800px;
-            margin: 20px auto;
+            max-width: 1050px;
+            margin: 60px auto;
             padding: 20px;
-            background-color: #1e1e1e;
+            background-color: #2d3748; /* Bijela pozadina za formu */
             border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blaga sjena oko forme */
         }
 
         h1 {
             text-align: center;
-            color: #ffffff;
+            color: #333; /* Tamno siva boja za naslov */
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px; /* Razmak između polja */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
-            color: #e0e0e0;
+            color: #4b5563; /* Svijetlo tamno siva boja za labelu */
         }
 
-        input[type="text"], input[type="number"], input[type="file"], select, textarea {
-            width: 100%;
+        input[type="text"], input[type="number"], select, textarea {
+            width: 500px;
             padding: 10px;
-            border: 1px solid #333;
+            border: 1px solid #ccc; /* Svijetlo siva boja obruba */
             border-radius: 4px;
-            background-color: #2c2c2c;
-            color: #ffffff;
+            background-color: #2d3748; /* Svijetlo siva boja pozadine */
+            color: #b8e0f8; /* Tamno siva boja teksta */
+            box-sizing: border-box; /* Uključuje border i padding u širinu */
         }
 
         input[type="file"] {
-            border: none;
+            border: 1px solid #ccc; /* Svijetlo siva boja obruba */
+            background-color: #b8e0f8; /* Svijetlo siva boja pozadine */
+            color: #333; /* Tamno siva boja teksta */
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box; /* Uključuje border i padding u širinu */
         }
 
-        button[type="submit"] {
-            background-color: #007bff;
+        input[type="file"]::-webkit-file-upload-button {
+            background-color: #007bff; /* Svijetlo plava boja za dugme */
             border: none;
-            padding: 10px 20px;
             color: #ffffff;
-            font-size: 16px;
+            padding: 8px 12px; /* Smanjena veličina dugmeta */
             border-radius: 4px;
             cursor: pointer;
         }
 
-        button[type="submit"]:hover {
-            background-color: #0056b3;
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background-color: #0056b3; /* Tamnija plava boja pri hoveru */
         }
 
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #333;
-            background-color: #2c2c2c;
+        button[class="btn-update"] {
+            background-color: #6b7280; /* Svijetlo plava boja za dugme */
+            border: none;
+            padding: 10px 10px;
             color: #ffffff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 10%; /* Dugme na 100% širine */
+            box-sizing: border-box; /* Uključuje border i padding u širinu */
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: #007bff;
+        button[class="btn-update"]:hover {
+            background-color: #0056b3; /* Tamnija plava boja pri hoveru */
         }
 
         .error {
@@ -82,80 +103,93 @@
             font-size: 14px;
         }
     </style>
+    @include('admin.css')
 </head>
 <body>
-<div class="container">
-    <form action="{{ route('product.update', $product->id) }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+<div class="container-scroller">
+    @include('admin.sidebar')
+    <!-- partial -->
+    @include('admin.header')
+    <div class="main-panel">
+        <div class="container">
+            <form action="{{ route('product.update', $product->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-        <div class="form-group">
-            <label for="title">Product Title</label>
-            <input type="text" id="title" name="title" class="form-control" value="{{ old('title', $product->title) }}" placeholder="Enter product title">
-            @error('title')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="title">Product Title</label>
+                        <input type="text" id="title" name="title" value="{{ old('title', $product->title) }}" placeholder="Enter product title">
+                        @error('title')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description" class="form-control" value="{{ old('description', $product->description) }}" placeholder="Enter product description">
-            @error('description')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" value="{{ old('description', $product->description) }}" placeholder="Enter product description">
+                        @error('description')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <label for="price">Product Price</label>
-            <input type="text" id="price" name="price" class="form-control" value="{{ old('price', $product->price) }}" placeholder="Enter product price">
-            @error('price')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Product Price</label>
+                        <input type="text" id="price" name="price" value="{{ old('price', $product->price) }}" placeholder="Enter product price">
+                        @error('price')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="discount_price">Discount Price</label>
-            <input type="text" id="discount_price" name="discount_price" class="form-control" value="{{ old('discount_price', $product->discount_price) }}" placeholder="Enter discount price (optional)">
-            @error('discount_price')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                    <div class="form-group">
+                        <label for="discount_price">Discount Price</label>
+                        <input type="text" id="discount_price" name="discount_price" value="{{ old('discount_price', $product->discount_price) }}" placeholder="Enter discount price (optional)">
+                        @error('discount_price')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <label for="quantity">Quantity</label>
-            <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity', $product->quantity) }}" placeholder="Enter quantity">
-            @error('quantity')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" value="{{ old('quantity', $product->quantity) }}" placeholder="Enter quantity">
+                        @error('quantity')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-        <div class="form-group">
-            <label for="category">Category</label>
-            <select id="category" name="category_id" class="form-control">
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
-                        {{ $category->category_name }}
-                    </option>
-                @endforeach
-            </select>
-            @error('category_id')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category_id">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->category_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                        <div class="error">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <label for="image">Product Image</label>
-            <input type="file" id="image" name="image" class="form-control">
-            @if($product->image)
-                <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" width="50px" height="50px">
-            @endif
-            @error('image')
-            <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
+                <div class="form-group">
+                    <label for="image">Product Image</label><br>
+                    <input type="file" id="image" name="image">
+                    @error('image')
+                    <div class="error">{{ $message }}</div>
+                    @enderror
+                </div>
 
-        <button type="submit" class="btn btn-secondary rounded-pill">Update Product</button>
-    </form>
+                <button class="btn-update" type="submit">Update</button>
+            </form>
+</div>
+    </div>
 </div>
 </body>
+@include('admin.script')
+
 </html>

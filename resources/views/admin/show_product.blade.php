@@ -27,6 +27,7 @@
 
         .table-container {
             margin-top: 30px;
+            border: 2px solid #002b45;
         }
 
         .table th, .table td {
