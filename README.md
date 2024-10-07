@@ -1,6 +1,14 @@
 
 ## About App
 This is a complex e-commerce application built with Laravel. It allows users to browse products, manage their shopping cart, and complete purchases using Stripe for secure payment processing.
+## Technologies Used
+- Laravel
+- MySQL
+- Stripe API
+- Bootstrap
+- SCSS
+- Vanilla JS
+- Apache
 
 ## FAST APP PREVIEW
 
@@ -11,11 +19,10 @@ Here are some screenshots of the app in action:
 
 ### Register user
 ![Register](imagess/register.png)
-
+#### Verify email after registration
 ![Verify Email](imagess/verify_email_reg.png)
 
 ### Products Home
-#### Guest
 ![Products Home](imagess/products_home.png)
 #### Search
 ![Search Products](imagess/search_home.png)
@@ -42,10 +49,11 @@ Here are some screenshots of the app in action:
 #### Orders in admin
 ![Admin Orders](imagess/admin_orders.png)
 #### Features from actions
-###### Generating pdf
-![Credit checkout](imagess/admin_pdf.png)
+
 ###### Sending email for orders
-![Credit checkout](imagess/order_email.png)
+![Admin email](imagess/order_email.png)
+###### Generating pdf when order is finished
+![Admin pdf](imagess/admin_pdf.png)
 
 ## Feature Highlights
 
